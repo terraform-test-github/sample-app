@@ -1,0 +1,53 @@
+name: 'Build PR 🧪'
+
+run-name: Build ${{ github.event_name }} ${{ github.event.number }} by @${{ github.actor }}
+
+on:
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  build-code:
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    concurrency:
+      group: ${{ github.event.number || github.ref }}
+      cancel-in-progress: true
+    steps:
+      - name: Checkout
+        run: echo "building..."
+
+  dev:
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    concurrency:
+      group: ${{ github.event.number || github.ref }}
+      cancel-in-progress: true
+      environment: DEV
+    steps:
+      - name: Checkout
+        run: echo "running dev checks..."      
+
+  qa:
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    concurrency:
+      group: ${{ github.event.number || github.ref }}
+      cancel-in-progress: true
+      environment: QA
+    steps:
+      - name: Checkout
+        run: echo "running qa checks..."     
+
+  prod:
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    concurrency:
+      group: ${{ github.event.number || github.ref }}
+      cancel-in-progress: true
+      environment: PROD
+    steps:
+      - name: Checkout
+        run: echo "running prod checks..."     
