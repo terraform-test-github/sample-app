@@ -9,7 +9,6 @@ on:
   push:
     branches:
       - main
-  workflow_dispatch:
 
 jobs:
   build-code:
@@ -25,10 +24,7 @@ jobs:
   dev:
     runs-on: ubuntu-latest
     timeout-minutes: 3
-    concurrency:
-      group: ${{ github.event.number || github.ref }}
-      cancel-in-progress: true
-      environment: DEV
+    environment: DEV
     steps:
       - name: Checkout
         run: echo "running dev checks..."      
@@ -36,10 +32,7 @@ jobs:
   qa:
     runs-on: ubuntu-latest
     timeout-minutes: 3
-    concurrency:
-      group: ${{ github.event.number || github.ref }}
-      cancel-in-progress: true
-      environment: QA
+    environment: QA
     steps:
       - name: Checkout
         run: echo "running qa checks..."     
@@ -47,10 +40,7 @@ jobs:
   prod:
     runs-on: ubuntu-latest
     timeout-minutes: 3
-    concurrency:
-      group: ${{ github.event.number || github.ref }}
-      cancel-in-progress: true
-      environment: PROD
+    environment: PROD
     steps:
       - name: Checkout
         run: echo "running prod checks..."
