@@ -38,6 +38,7 @@ jobs:
         run: echo "running qa checks..."     
 
   acc:
+    needs: tst
     runs-on: ubuntu-latest
     timeout-minutes: 3
     environment: ACC
@@ -46,6 +47,7 @@ jobs:
         run: echo "running prod checks..."
 
   prd:
+    needs: acc
     runs-on: ubuntu-latest
     timeout-minutes: 3
     environment: PRD
