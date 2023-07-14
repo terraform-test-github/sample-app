@@ -11,7 +11,7 @@ on:
       - main
 
 jobs:
-  build-code:
+  build:
     runs-on: ubuntu-latest
     timeout-minutes: 3
     concurrency:
@@ -22,6 +22,7 @@ jobs:
         run: echo "building..."
 
   dev:
+    needs: build
     runs-on: ubuntu-latest
     timeout-minutes: 3
     environment: DEV
@@ -30,6 +31,7 @@ jobs:
         run: echo "running dev checks..."      
 
   tst:
+    needs: dev
     runs-on: ubuntu-latest
     timeout-minutes: 3
     environment: TST
