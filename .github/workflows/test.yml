@@ -22,10 +22,19 @@ jobs:
     timeout-minutes: 30
     steps:
       - name: Dump event input
-        run: echo ${{ toJson(github.event.inputs) }}
+        run: echo "$CTX"
+        env:
+            CTX: ${{ toJson(github.event.inputs) }}
 
       - name: Dump input
-        run: echo ${{ toJson(inputs) }}
+        run: echo "$CTX"
+        env:
+            CTX: ${{ toJson(inputs) }}
+
+      - name: Dump github
+        run: echo "$CTX"
+        env:
+            CTX: ${{ toJson(github) }}            
 
   job2:
     if: |
