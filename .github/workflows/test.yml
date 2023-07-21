@@ -38,7 +38,7 @@ jobs:
 
   job2:
     if: |
-      (github.event.inputs.action == 'site' || github.event.inputs.action == 'all') &&
+      (github.event.inputs.action == 'site' || github.event.inputs.action == 'all' || github.event_name == 'push') &&
       (!cancelled() && !failure())
     runs-on: 'ubuntu-latest'
     timeout-minutes: 30    
