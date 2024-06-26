@@ -21,7 +21,43 @@ on:
         type: string
 
 jobs:
-  job1:
+  deploy_dev:
+    name: 'deploy_dev - ${{ github.event.inputs.identifier }}'
+    runs-on: 'ubuntu-latest'
+    environment: DEV
+    timeout-minutes: 30
+    steps:
+      - name: Dump event input
+        run: echo "$CTX"
+        env:
+            CTX: ${{ toJson(github.event.inputs) }}
+
+      - name: Dump github
+        run: echo "$CTX"
+        env:
+            CTX: ${{ toJson(github) }}
+
+  deploy_test:
+    name: 'deploy_test - ${{ github.event.inputs.identifier }}'
+    needs:  deploy_dev
+    runs-on: 'ubuntu-latest'
+    environment: TST
+    timeout-minutes: 30
+    steps:
+      - name: Dump event input
+        run: echo "$CTX"
+        env:
+            CTX: ${{ toJson(github.event.inputs) }}
+
+      - name: Dump github
+        run: echo "$CTX"
+        env:
+            CTX: ${{ toJson(github) }}
+
+  deploy_qa:
+    name: 'deploy_qa - ${{ github.event.inputs.identifier }}'
+    needs:  deploy_test
+    environment: QA
     runs-on: 'ubuntu-latest'
     timeout-minutes: 30
     steps:
@@ -30,22 +66,24 @@ jobs:
         env:
             CTX: ${{ toJson(github.event.inputs) }}
 
-      - name: Dump input
+      - name: Dump github
         run: echo "$CTX"
         env:
-            CTX: ${{ toJson(inputs) }}
+            CTX: ${{ toJson(github) }}        
+
+  deploy_prod:
+    name: 'deploy_prod - ${{ github.event.inputs.identifier }}'
+    needs:  deploy_qa
+    environment: PROD
+    runs-on: 'ubuntu-latest'
+    timeout-minutes: 30
+    steps:
+      - name: Dump event input
+        run: echo "$CTX"
+        env:
+            CTX: ${{ toJson(github.event.inputs) }}
 
       - name: Dump github
         run: echo "$CTX"
         env:
-            CTX: ${{ toJson(github) }}            
-
-  job2:
-    if: |
-      (github.event.inputs.action == 'site' || github.event.inputs.action == 'all' || github.event_name == 'push') &&
-      (!cancelled() && !failure())
-    runs-on: 'ubuntu-latest'
-    timeout-minutes: 30    
-    steps:
-      - name: Dump event input
-        run: echo Running
+            CTX: ${{ toJson(github) }}
