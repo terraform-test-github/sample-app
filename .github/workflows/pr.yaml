@@ -11,7 +11,7 @@ on:
       - main
 
 jobs:
-  build-code:
+  build:
     runs-on: ubuntu-latest
     timeout-minutes: 3
     concurrency:
@@ -22,6 +22,7 @@ jobs:
         run: echo "building..."
 
   dev:
+    needs: build
     runs-on: ubuntu-latest
     timeout-minutes: 3
     environment: DEV
@@ -29,20 +30,35 @@ jobs:
       - name: Checkout
         run: echo "running dev checks..."      
 
-  qa:
+  tst:
+    needs: dev
     runs-on: ubuntu-latest
     timeout-minutes: 3
-    environment: QA
+    environment: TST
     steps:
       - name: Checkout
         run: echo "running qa checks..."     
 
-  prod:
+  acc:
+    needs: tst
     runs-on: ubuntu-latest
     timeout-minutes: 3
-    environment: PROD
+    environment: ACC
+    steps:
+      - name: Checkout
+        run: echo "running prod checks..."
+
+  prd:
+    needs: acc
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    environment: PRD
     steps:
       - name: Checkout
         run: echo "running prod checks..."
 
 
+
+
+
+        
