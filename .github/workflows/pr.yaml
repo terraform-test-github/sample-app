@@ -21,6 +21,9 @@ jobs:
       - name: Checkout
         run: echo "building..."
 
+      - name: Wait 2 sec
+        run: sleep 2
+
   dev:
     runs-on: ubuntu-latest
     timeout-minutes: 3
@@ -29,6 +32,8 @@ jobs:
       - name: Checkout
         run: echo "running dev checks..."      
 
+      - name: Wait 2 sec
+        run: sleep 2
   qa:
     runs-on: ubuntu-latest
     timeout-minutes: 3
@@ -37,6 +42,8 @@ jobs:
       - name: Checkout
         run: echo "running qa checks..."     
 
+      - name: Wait 2 sec
+        run: sleep 2
   prod:
     runs-on: ubuntu-latest
     timeout-minutes: 3
@@ -45,4 +52,6 @@ jobs:
       - name: Checkout
         run: echo "running prod checks..."
 
+      - name: Wait 2 sec
+        run: sleep 2
 
