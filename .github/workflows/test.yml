@@ -32,10 +32,8 @@ jobs:
         env:
             CTX: ${{ toJson(github.event.inputs) }}
 
-      - name: Dump github
-        run: echo "$CTX"
-        env:
-            CTX: ${{ toJson(github) }}
+      - name: Wait 5 sec
+        run: sleep 5
 
   deploy_test:
     name: 'deploy_test - ${{ github.event.inputs.identifier }}'
@@ -49,10 +47,8 @@ jobs:
         env:
             CTX: ${{ toJson(github.event.inputs) }}
 
-      - name: Dump github
-        run: echo "$CTX"
-        env:
-            CTX: ${{ toJson(github) }}
+      - name: Wait 5 sec
+        run: sleep 5
 
   deploy_qa:
     name: 'deploy_qa - ${{ github.event.inputs.identifier }}'
@@ -66,10 +62,9 @@ jobs:
         env:
             CTX: ${{ toJson(github.event.inputs) }}
 
-      - name: Dump github
-        run: echo "$CTX"
-        env:
-            CTX: ${{ toJson(github) }}        
+      - name: Wait 5 sec
+        run: sleep 5
+   
 
   deploy_prod:
     name: 'deploy_prod - ${{ github.event.inputs.identifier }}'
@@ -83,7 +78,5 @@ jobs:
         env:
             CTX: ${{ toJson(github.event.inputs) }}
 
-      - name: Dump github
-        run: echo "$CTX"
-        env:
-            CTX: ${{ toJson(github) }}
+      - name: Wait 5 sec
+        run: sleep 5
